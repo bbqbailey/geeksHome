@@ -1,0 +1,198 @@
+Today is 9/14/2015. 
+After many installs onto my Beaglebone Black Rev C, I have
+finalized on a version, and documented the installation here.
+
+This documents my installation of BeagleBone Black Debian 7.8
+
+
+Steps to install Debian.
+
+I got a link to the current software downloads from the Beaglebone.org site.  Poke around to find it, as it 
+may have changed location from anything I would put here, and I don't plan on trying to stay 
+current with their web page.
+
+
+Download the 'lxde' version of Debian for BeagleBone Black.  From my experience,
+it has less issues than the 'console' version.  (You can, of course, get the -console- 
+version instead of the 'lxde' version, which is what I did first, but for me, it
+had issues, so I reinstalled the 'lxde' version.)  Get the file ending in "img.xz". 
+It will probably be around 4GB in size.  It may look something like this:
+    
+    bone-debian-7.8-lxde-4gb-armhf-2015-07-28-4gb.img.xz
+
+Insert an SD Card at least as large as 4GB into a card reader.  Will need to use a carrier.
+
+Use gparted to unmount then delete any partitions on the card, so that only the single large unformated partition is left.
+
+IMPORTANT: NOTE WHERE THE SD CARD IS IN /dev; e.g., /dev/sdj
+
+Install the Debian image on to the SD Card:
+-(Assuming it's  bone-debian-7.8-lxde-4gb-armhf-2015-07-28-4gb.img.xz):
+- Assuming the SD Card is 'sdj' in the following example:
+- xzcat bone-debian-7.8-lxde-4gb-armhf-2015-07-28-4gb.img.xz | dd of=/dev/<SD_CARD_LOCATION_NOTED_ABOVE>
+
+This will take a while.
+
+Remove from host and install into the BeagleBone
+If this is your first time booting from the micro SD Card, then you will need to hold down the
+Beaglebone Black's boot button (S2 - check a board picture for location) before connecting the 
+Beaglebone to power.  After the 4 blue onboard LEDs have gone from all-lit to flashing, it should
+be OK to release the button.  My experince has been, once I have done this, I no longer have to 
+hold this button down when booting.
+
+Power up the Beaglebone
+Log into the Beaglebone
+- ssh root@beaglebone.local
+    if that fails:
+    try logging into root@192.168.7.2 or (no password should be needed)
+                     debian@192.168.7.2  (password should be shown; currently is temp
+                     
+    There may be some key issues; resolve where needed, yes otherwise.
+    
+Change the passwords for root and debian!
+    if logged in as root: passwd
+        then: passwd debian
+        
+Check the system time!!!
+- date
+If not current today, 
+    then install npv.
+    add @reboot npv to root's crontab via "crontab -e"
+If date is valid but time is not your timezone then:
+        dpkg-reconfigure tzdata
+    If in the USA then select
+        US
+    If in Eastern timezone then select
+        Eastern 
+That should do it.   
+    
+    
+Update software to latest for this release
+    apt-get update
+    apt-get upgrade
+Mine completed without any errors. Hopefully, yours will too! 
+I usually like to do another apt-get update / upgrade in case anything ticked a requirement.
+
+My system was installed as 'Wheezy'.  However, some of the tools I want to use require 'Jessie'.  So, I upgraded to 'Jesse'.
+    - steps for upgrading to Debian Beaglebone Black 'Jessie'
+        - ensure you have a spare 4GB or greater microSD card.
+        - I had the least amount of trouble when I removed any FAT formatting that might have already been on it.
+        - Download the Debian Beaglebone Black 'Jessie' version that is the most stable for you from eLinux.org.  In my case, none of those
+            images were in the 'stable' condition, even though Debian Jessis has been released for some months now; Beaglebone releases lag the 
+            standard Debian release.  So, I had to opt (depending on when you read this, this may not be an issue for you) for the 'testing' version
+            of Jessie.  I did not plan on using any XWindows capabilities, so I opted for the -console- version, ending in .img.xz.  This version only
+            requires 2GB as opposed to the 4GB for the XWindows version.
+        - I downloaded it by clicking on the download for the version I wanted, saving it to my Ubuntu host's Download directory.
+        - I inserted the micro SD card into my host Ubuntu's computer card reader, and noted the /dev/sdX associated for this card.  I will need this information.
+            In my case, it was /dev/sdk, so I'll use that below.  MAKE SURE YOU USE THE CORRECT /dev/sdX as it will overwrite that drive and you will permanently lose
+            anything that may be on that drive!
+        - After it completed, I executed the command 'xzcat' (this decompresses the image) for the downloaded file, and piped that into the 'dd' command:
+            - xzcat <downloadedImage.img.xz> | dd of=/dev/sdk
+        - This took a while for the image to be placed onto my /dev/sdk micro SD Card
+        - Next we'll want to power up the Beaglebone Black with that image on the micro SD Card.
+        - Make sure the Beaglebone Black is unplugged from the power feed(s), both the host USB connection as well as any seperate 5VDC power you may be providing.
+        - Remove any micro SD Card that may be inserted into your Beaglebone Black and store it somewhere safe.
+        - Insert the micro SD Card you just placed the downloaded image onto into the Beaglebone Black's micro SD Card slot.
+        - Plug power back into the Beaglebone Black.
+        - If this is your first time booting from the micro SD Card, you will need to hold down the 'boot' button (S2) before providing power to the board.  Later, you may not have to hold this button down.  You can release it after all 4 blue lights have illuminated then started blinking.
+        - You can log into your Beaglebone Black using ssh.  This is documented effectively on other sites, so consult them if you have issues.
+        
+
+
+If you need to change the time info (e.g., wrong or desiring EDT instead of UTC)
+Run 'dpkg-reconfigure tzdata' if you wish to change it.
+
+
+??? from root, create a user homeMonitor.  You will need to force it as it has a uppercase 'M' in it.
+    adduser homeMonitor --force-badname
+enter the password you desire, then complete the questionair as desired.  I usually add Home Monitor System 
+for the Full name, then just return for everything else.
+
+Pull the geekHome application from github.com
+
+Transfer files from your host computer for user_homeMonitor to the beaglebone /home/homeMonitor
+I use a USB thumb drive to pull the user_homeMonitor from my host, then plug it into the Beaglebone.
+On my Beaglebone, the USB shows up on /media as /media/1862-B2E6.  I don't know where this 1862-B2E6
+comes from!  
+
+The files on my USB are owned by 'debian', with 700 as the security mode.  That means user homeMonitor can't access.
+My USB thumbdrive is FAT (Microsoft file format), so I'm unable to easily change the file permissions, as FAT
+doesn't have the file permissions concept.  Therefore, homeMonitor can't access these files.  So, as root, copy the files
+from /media/<YOUR_USB_DRIVE> to /home/homeMonitor.  These files will be owned by 'root', so we'll need to change the ownership
+as well.
+
+    sudo su   (become root until ^D <Control-D>)
+    cp -a /media/<YOUR_USB_DRIVE>/user_homeMonitor/. /home/homeMonitor/
+    
+    chown -R homeMonitor:homeMonitor *   (change owner and group recursive)
+    chown -R homeMonitor:homeMonitor .*  (change owner and group recursive hidden files):
+    ls -al    (verify all files owned and group are homeMonitor)
+    ^D        (exit root su)
+
+The Debian Beaglebone Black 'Jessie' version has python3.4 included, but not set as default version.
+
+verify python version
+    python
+        shows: Python 2.7.9 (on my system - yours may vary
+    ^D       (to exit python)
+    
+verify python3 version
+    python3
+        shows: Python 3.4.2 (on my system - yours may vary)
+        
+My system shows Python 3.4.2 (default, Oct 8 2014, 14:38:51)
+
+The pyvenv environment will need to utilize Python 3.4 or newer.
+
+There should be an 'alias' in the .bash_aliases for python3, which will
+point you to the python3 installation instead of the python2.7 installation.  It's 
+probably wise to leave the original installation's python link alone, as not all system
+utilities have been upgraded yet to use python3, but homeMonitor application requires python3.
+
+If not, then create an alias in your .bashrc and .bash_profile.  If you don't understand this, then consult the Internet for more detail.
+    alias python=python3.4
+Then verify via 
+    python
+Mine shows Python 3.4.2
+
+
+Adafruit_BBIO currently requires that it be built from source, so you'll need to setup your Beaglebone so it can perform this activity.
+    sudo apt-get update
+    sudo apt-get upgrade
+        wait for it to finish, then
+    sudo apt-get install build-essential python3-dev python3-setuptools
+        
+
+If you are going to be doing development, then it is better to install Python's pyvenv environment in 
+order to avoid clashes with other project packages.  Even if you aren't going to be doing development, 
+I recommend going with Python's pyvenv environment.
+
+Assuming you are going to create a standalone environment:
+    cd to location you want to build the environment.  e.g., 
+        cd /home/yourHome/SoftwareProjects
+    now create the project environment using the 'pyvenv' utility.
+        pyvenv-3.4 ./geeksHome      (Note: in the future, the pyvenv-3.4 may differ, but that's current in Jessie)
+    this will place a new directory geeksHome in /home/yourHome/SoftwareProjects
+    Now cd to that new directory
+        cd ./geeksHome
+    Now activate it to use it ( your will be 'within' the virtual environment), via the bin directory in geeksHome
+        source bin/activate
+            (Later, when you are ready to stop 'being within' the virtual environment), you 'deactivate'
+    
+Now we are going to install the Adafruit_BBIO package into the virtual environment geeksHome
+    cd to your geeksHome directory
+    pip3 install adafruit_bbio
+    
+Test your installation
+    python  (you issued this command)
+    >>>import Adafruit_BBIO.GPIO as GPIO    (you issue this command)
+    >>>print(GPIO)                          (you issue this command)
+    <module 'Adafruit_BBIO.GPIO' from '/tmp/adaenv/lib/python3.4/site-packages/Adafruit_BBIO/GPIO.cpython-34m.so'>  (response)
+    
+    ^D   (to exit Python)
+    
+
+
+
+
+
