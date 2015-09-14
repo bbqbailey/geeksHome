@@ -1,5 +1,0 @@
-Zone, SensorName,  SensorLocation,                           SensorType,                  SensorState, Header, Pin, GPIO, Direction
-Porch, ScreenDoor, "ScreenDoor interior frame",              MagneticSwitch,              Active,      P8,     11,  44,   in
-Porch, HouseDoor,  "Inside house, on door frame",            MagneticSwitch,              Inactive,    -,       -,   -,    -
-Porch, PIR,        "On porch, above house door",             DeviceSwitch,                Inactive,    -,       -,   -,    -
-Porch, Fire,       "On porch, at apex above kitchen window", DeviceSwitch,                Inactive,    -,       -,   -,    -
