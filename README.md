@@ -1,4 +1,7 @@
 # geeksHome
+<NOTE: Under development, not ready for use.  Still defining and doing initial setup of project>
+
+
 Hardware and software for use in a geek's home.
 
 Items such as networked 
