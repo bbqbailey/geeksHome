@@ -2,7 +2,9 @@ Today is 9/14/2015.
 After many installs onto my Beaglebone Black Rev C, I have
 finalized on a version, and documented the installation here.
 
-This documents my installation of BeagleBone Black Debian 7.8
+This documents my installation of BeagleBone Black Debian 8.1 Jessie Test
+
+NOTE: This is under development, and is definately not ready for use!!!
 
 
 Steps to install Debian.
