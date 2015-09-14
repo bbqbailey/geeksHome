@@ -191,6 +191,23 @@ Test your installation
     
     ^D   (to exit Python)
     
+    
+===not sure where this needs to be inserted into this document yet =====
+    When creating the virtual environment, you can either set this up yourself, or make use of a 'requirement.txt' tar file I created, named geeksHome.tar.gz'.  
+    
+    This was created by first creating a 'requirements.txt' file, then taring up the directory it was in.
+    First, ensure you are in the active virtual environment.
+    Then issue:
+        pip3 freeze > requirements.txt
+        
+    Using the tar file
+    first, unpack it somewhere
+    then copy the requirements.txt file to the virtual environment
+    then install it using 
+        pip3 install -r requirements.txt
+        
+        
+    
 
 
 
