@@ -14,24 +14,23 @@ may have changed location from anything I would put here, and I don't plan on tr
 current with their web page.
 
 
-Download the 'lxde' version of Debian for BeagleBone Black.  From my experience,
-it has less issues than the 'console' version.  (You can, of course, get the -console- 
-version instead of the 'lxde' version, which is what I did first, but for me, it
-had issues, so I reinstalled the 'lxde' version.)  Get the file ending in "img.xz". 
-It will probably be around 4GB in size.  It may look something like this:
+Download either the 'lxde' version or 'console' version of Debian for BeagleBone Black.
+Get the file ending in "img.xz". The 'lxde' version will probably be around 4GB in size, while the 'console' version
+will be about 2Gb.  It may look something like this:
     
     bone-debian-7.8-lxde-4gb-armhf-2015-07-28-4gb.img.xz
 
-Insert an SD Card at least as large as 4GB into a card reader.  Will need to use a carrier.
+Insert an SD Card at least as large as 4GB into a card reader.  You will need to use a SD card carrier.
 
-Use gparted to unmount then delete any partitions on the card, so that only the single large unformated partition is left.
+Use gparted to unmount then delete any partitions on the SD card, so that only the single large unformated partition is left.
 
 IMPORTANT: NOTE WHERE THE SD CARD IS IN /dev; e.g., /dev/sdj
 
-Install the Debian image on to the SD Card:
+Install the Debian image on to the SD Card: (see ==Jessie== below for newer version as of today's date)
 -(Assuming it's  bone-debian-7.8-lxde-4gb-armhf-2015-07-28-4gb.img.xz):
 - Assuming the SD Card is 'sdj' in the following example:
-- xzcat bone-debian-7.8-lxde-4gb-armhf-2015-07-28-4gb.img.xz | dd of=/dev/<SD_CARD_LOCATION_NOTED_ABOVE>
+
+    xzcat bone-debian-7.8-lxde-4gb-armhf-2015-07-28-4gb.img.xz | dd of=/dev/<SD_CARD_LOCATION_NOTED_ABOVE>
 
 This will take a while.
 
@@ -52,10 +51,12 @@ Log into the Beaglebone
     There may be some key issues; resolve where needed, yes otherwise.
     
 Change the passwords for root and debian!
-    if logged in as root: passwd
-        then: passwd debian
+    if logged in as root, change your password with: 
+        passwd
+    then change debian's password: 
+        passwd debian
         
-Check the system time!!!
+Check the system time!  This should be done prior to updating the system software.
 - date
 If not current today, 
     then install npv.
@@ -66,7 +67,8 @@ If date is valid but time is not your timezone then:
         US
     If in Eastern timezone then select
         Eastern 
-That should do it.   
+That should do it. If not, assuming you are EST, try:
+    cp /usr/share/zoneinfo/America/New_York /etc/timezone
     
     
 Update software to latest for this release
@@ -75,8 +77,9 @@ Update software to latest for this release
 Mine completed without any errors. Hopefully, yours will too! 
 I usually like to do another apt-get update / upgrade in case anything ticked a requirement.
 
+====Jessie=====
 My system was installed as 'Wheezy'.  However, some of the tools I want to use require 'Jessie'.  So, I upgraded to 'Jesse'.
-    - steps for upgrading to Debian Beaglebone Black 'Jessie'
+    - steps for installing the Debian Beaglebone Black 'Jessie' image to your micro SD card:
         - ensure you have a spare 4GB or greater microSD card.
         - I had the least amount of trouble when I removed any FAT formatting that might have already been on it.
         - Download the Debian Beaglebone Black 'Jessie' version that is the most stable for you from eLinux.org.  In my case, none of those
@@ -208,8 +211,19 @@ Test your installation
     then install it using 
         pip3 install -r requirements.txt
         
-        
-    
+BEAGLEBONE LOCAL        
+If trying to log in via 
+    ssh root@beaglebone.local 
+results in an error for you such as
+    ssh: Could not resolve hostname beaglebone.local: Name or service not known
+then you are missing avahi-deamon, in which case:
+    sudo apt-get install avahi-daemon
+This took quite a while for my system.
+
+Note: my host computer (Ubuntu 14.04) began to have a large increase in the size of the system log /var/log/syslog
+In looking at this, I detected a lot of dhcp repeating enteries, about every 10 seconds or so, along with avahi-daemon and networkmanager entries.
+It was associated with (for my system) eth1, which was associated with the USB connection from my host to my Beaglebone Black; I was using this as the primary power connection for the Beagle.  I elected to remove this cable and power the Beagle from a 5VDC power source, and the issue went away.  So, if you are using the USB connection and notice your /var/log/syslog file getting much larger than normal, this may be the culpret.
+
 
 
 
