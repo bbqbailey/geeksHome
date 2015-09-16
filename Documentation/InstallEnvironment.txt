@@ -172,7 +172,7 @@ If you are going to be doing development, then it is better to install Python's 
 order to avoid clashes with other project packages.  Even if you aren't going to be doing development, 
 I recommend going with Python's pyvenv environment.
 
-Assuming you are going to create a standalone environment:
+Assuming you are going to create a standalone environment (also see Note below for alternative using requirement.txt):
     cd to location you want to build the environment.  e.g., 
         cd /home/yourHome/SoftwareProjects
     now create the project environment using the 'pyvenv' utility.
@@ -185,8 +185,9 @@ Assuming you are going to create a standalone environment:
             (Later, when you are ready to stop 'being within' the virtual environment), you 'deactivate'
     
 Now we are going to install the Adafruit_BBIO package into the virtual environment geeksHome
-    cd to your geeksHome directory
+    cd to your geeksHome directory if you moved
     pip3 install adafruit_bbio
+On my system, I got a lot of warning messages regarding 'return' with no value.  This just means the developers on adafruit_bbio have not done all that was necessary to illimante those warnings for Python3, but that doesn't affect our ability to use it.
     
 Test your installation
     python  (you issued this command)
@@ -197,8 +198,8 @@ Test your installation
     ^D   (to exit Python)
     
     
-===not sure where this needs to be inserted into this document yet =====
-    When creating the virtual environment, you can either set this up yourself, or make use of a 'requirement.txt' tar file I created, named geeksHome.tar.gz'.  
+Note on virtual environment using requirement.txt:
+When creating the virtual environment, you can either set this up yourself, or make use of a 'requirement.txt' tar file I created, named geeksHome.tar.gz'.  
     
     This was created by first creating a 'requirements.txt' file, then taring up the directory it was in.
     First, ensure you are in the active virtual environment.
