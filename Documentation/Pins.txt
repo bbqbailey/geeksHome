@@ -56,18 +56,18 @@ Siren
 
 
 Porch Sensor Inputs
-    - Screen Door           sensor 1:  P8-3,  GPIO_38, Digital 'in'
-    - House Door            sensor 2:  P8-4,  GPIO_39, Digital 'in'
-    - PIR,                  sensor 3:  P8-5,  GPIO_34, Digital 'in'
-    - Fire                  sensor 4:  P8-6,  GPIO_35, Digital 'in'
-    - Future Sensor         sensor 5:  P8-7,  GPIO_66, Digital 'in'
-    - Future Sensor         sensor 6:  P8-8,  GPIO_67, Digital 'in'
-    - Future Sensor         sensor 7:  P8-9,  GPIO_69, Digital 'in'
-    - Future Sensor         sensor 8:  P8-10, GPIO_68, Digital 'in'
-    - Future Sensor         sensor 9:  P8-11, GPIO_45, Digital 'in'
-    - Future Sensor         sensor 10: P8-12, GPIO_44, Digital 'in'
-    - Future Sensor         sensor 11: P8-13, GPIO_23, Digital 'in'
-    - Future Sensor         sensor 12: P8-14, GPIO_26, Digital 'in'
+    - sensor 1:   Screen Door     P8-3,  GPIO_38, Digital 'in'
+    - sensor 2:   House Door      P8-4,  GPIO_39, Digital 'in'
+    - sensor 3:   PIR             P8-5,  GPIO_34, Digital 'in'
+    - sensor 4:   Fire            P8-6,  GPIO_35, Digital 'in'
+    - sensor 5:   Future Sensor   P8-7,  GPIO_66, Digital 'in'
+    - sensor 6:   Future Sensor   P8-8,  GPIO_67, Digital 'in'
+    - sensor 7:   Future Sensor   P8-9,  GPIO_69, Digital 'in'
+    - sensor 8:   Future Sensor   P8-10, GPIO_68, Digital 'in'
+    - sensor 9:   Future Sensor   P8-11, GPIO_45, Digital 'in'
+    - sensor 10:  Future Sensor   P8-12, GPIO_44, Digital 'in'
+    - sensor 11:  Future Sensor   P8-13, GPIO_23, Digital 'in'
+    - sensor 12:  Future Sensor   P8-14, GPIO_26, Digital 'in'
 
 Standard System Input
     - These inputs are common to all cloned zones

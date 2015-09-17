@@ -1,5 +1,13 @@
-Zone, SensorName,  SensorLocation,                           SensorType,                  SensorState, Header, Pin, GPIO, Direction
-Porch, ScreenDoor, "ScreenDoor interior frame",              MagneticSwitch,              Active,      P8,     11,  44,   in
-Porch, HouseDoor,  "Inside house, on door frame",            MagneticSwitch,              Inactive,    -,       -,   -,    -
-Porch, PIR,        "On porch, above house door",             DeviceSwitch,                Inactive,    -,       -,   -,    -
-Porch, Fire,       "On porch, at apex above kitchen window", DeviceSwitch,                Inactive,    -,       -,   -,    -
+Sensor ID   , Zone          , SensorName ,  SensorLocation                         , SensorType           , SensorState, Header, Pin, GPIO, Type    , Direction
+Sensor_1    , Porch         , ScreenDoor ,  ScreenDoor interior frame              , MagneticSwitch       , Active     , P8    ,  3 , 38  , Digital , in
+Sensor_2    , Porch         , HouseDoor  ,  Inside house on door frame             , MagneticSwitch       , Inactive   , P8    ,  4 , 39  , Digital , in
+Sensor_3    , Porch         , PIR        ,  On porch above house door              , DeviceSwitch         , Inactive   , P8    ,  5 , 34  , Digital , in
+Sensor_4    , Porch         , Fire       ,  On porch at apex above kitchen window  , DeviceSwitch         , Inactive   , P8    ,  6 , 35  , Digital , in
+Sensor_5    ,               ,            ,                                         ,                      , Inactive   , P8    ,  7 , 66  , Digital , in
+Sensor_6    ,               ,            ,                                         ,                      , Inactive   , P8    ,  8 , 67  , Digital , in
+Sensor_7    ,               ,            ,                                         ,                      , Inactive   , P8    ,  9 , 69  , Digital , in
+Sensor_8    ,               ,            ,                                         ,                      , Inactive   , P8    , 10 , 68  , Digital , in
+Sensor_9    ,               ,            ,                                         ,                      , Inactive   , P8    , 11 , 45  , Digital , in
+Sensor_10   ,               ,            ,                                         ,                      , Inactive   , P8    , 12 , 44  , Digital , in
+Sensor_11   ,               ,            ,                                         ,                      , Inactive   , P8    , 13 , 23  , Digital , in
+Sensor_12   ,               ,            ,                                         ,                      , Inactive   , P8    , 14 , 26  , Digital , in

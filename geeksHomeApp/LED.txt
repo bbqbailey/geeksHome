@@ -1,0 +1,24 @@
+Sensor ID,   LED, Header, Pin, GPIO,    Type, Direction
+Sensor_1,    Red,     P8,  46,   71, Digital, out
+Sensor_1,  Green,     P8,  45,   70, Digital, out
+Sensor_2,    Red,     P8,  44,   73, Digital, out
+Sensor_2,  Green,     P8,  43,   72, Digital, out
+Sensor_3,    Red,     P8,  42,   75, Digital, out
+Sensor_3,  Green,     P8,  41,   74, Digital, out
+Sensor_4,    Red,     P8,  40,   77, Digital, out
+Sensor_5,  Green,     P8,  39,   76, Digital, out
+Sensor_5,    Red,     P8,  38,   79, Digital, out
+Sensor_6,  Green,     P8,  37,   78, Digital, out
+Sensor_6,    Red,     P8,  36,   80, Digital, out
+Sensor_7,  Green,     P8,  34,    8, Digital, out
+Sensor_7,    Red,     P8,  33,    9, Digital, out
+Sensor_8,  Green,     P8,  32,   11, Digital, out
+Sensor_8,    Red,     P8,  31,   10, Digital, out
+Sensor_9,  Green,     P8,  30,   89, Digital, out
+Sensor_9,    Red,     P8,  29,   87, Digital, out
+Sensor_10, Green,     P8,  28,   88, Digital, out
+Sensor_10,   Red,     P8,  27,   86, Digital, out
+Sensor_11, Green,     P8,  26,   61, Digital, out
+Sensor_11,   Red,     P8,  25,   32, Digital, out
+Sensor_12, Green,     P8,  24,   33, Digital, out
+Sensor_12,   Red,     P8,  23,   36, Digital, out

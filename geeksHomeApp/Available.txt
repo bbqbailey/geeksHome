@@ -1,0 +1,4 @@
+Name               ,  Header, Pin,  GPIO,
+Future User Defined,      P8,  18,    65
+Future User Defined,      P8,  19,    22
+Future User Defined,      P8,  20,    63

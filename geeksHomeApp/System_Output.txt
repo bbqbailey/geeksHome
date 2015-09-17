@@ -1,0 +1,3 @@
+Name,            Function,  Header,  Pin, GPIO,       Type,  Direction
+Siren,               Loud,      P8,   21,   62,    Digital,         out
+Siren,               Chirp,     P8,   22,   37,    Digital,         out

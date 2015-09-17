@@ -1,0 +1,4 @@
+Name,            Function,  Header,  Pin, GPIO,    Type, Direction
+Siren,         Loud/Chirp,      P8,   15,   47, Digital, in
+Siren, Acknowledge Button,      P8,   16,   46, Digital, in
+Siren,             On/Off,      P8,   17,   27, Digital, in
