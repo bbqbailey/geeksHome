@@ -75,10 +75,9 @@ Standard System Input
     -----
     - Siren Loud/Chirp                 P8-15, GPIO_47, Digital 'in'
     - Siren Acknowledge button         P8-16, GPIO_46, Digital 'in'
-
+    - Siren On/Off                     P8-17, GPIO_27, Digital 'in'
 
 Undefined and Available for other use, in or out
-    - Future User Defined              P8-17, GPIO_27, Digital '<User Defined>'
     - Future User Defined              P8-18, GPIO_65, Digital '<User Defined>'
     - Future User Defined              P8-19, GPIO_22, Digital '<User Defined>'
     - Future User Defined              P8-20, GPIO_63, Digital '<User Defined>'
