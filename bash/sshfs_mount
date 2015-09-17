@@ -1,0 +1,18 @@
+#!/bin/bash
+#
+#This utility should be invoked from the Beaglebone Black.
+#In the command geek@trader.local, change 'trader' to your host
+#This assumes:
+#	you have created user geek on both the Beagle and on your host.
+#       you have the filestructure identified in the commands
+#
+#Understanding the command:
+#	sshfs:                                  mounts a networked file using ssh
+#	geek@<user geek on your host>.local     where the source directory is located
+#		./SoftwareProjects/geeksHome    the directory structure where your source is located
+#	/home/geek/SoftwareProjects/geeksHome-venv/geeksHome
+#                                               the directory on the Beagle where the host will be made available
+
+
+sshfs  geek@trader.local:./SoftwareProjects/geeksHome /home/geek/SoftwareProjects/geeksHome-venv/geeksHome
+

@@ -1,4 +1,6 @@
-Today is 9/14/2015. 
+Today is 9/17/2015. 
+This is version: 1.0
+
 After many installs onto my Beaglebone Black Rev C, I have
 finalized on a version, and documented the installation here.
 
@@ -6,40 +8,32 @@ This documents my installation of BeagleBone Black Debian 8.1 Jessie Test
 
 NOTE: This is under development, and is definately not ready for use!!!
 
+Required for YOU to successfully use this application
+	You are already familiar with using the Beaglebone Black
+	You are already familiar with using Linux
+	You are already familiar with identifying the IP address for your Beaglebone Black and it is connected to your network.
 
-Steps to install Debian.
+Required to run as an application:
+	You have a Beaglebone Black.  This application has only been tested on Rev C.
+	Debian Beaglebone Black Wheezy
+	Python 2.7 or greater (not tested on this version)
+	Adafruit_BBIO package (please refer to adafruit.com for details on installation)
 
-I got a link to the current software downloads from the Beaglebone.org site.  Poke around to find it, as it 
-may have changed location from anything I would put here, and I don't plan on trying to stay 
-current with their web page.
+Required to use as a developer:
+	You have a Beaglebone Black.  This application has only been tested on Rev C.
+	Debian Beaglebone Black Jessie
+	Python 3.4 or greater (makes use of pyvenv)
+	Adafruit_BBIO package (please refer to adafruit.com for details on installation)
 
+Note:
+	This application has only been tested on:
+		- Beaglebone Black Rev C.
+		- debian version Jessie
+		- Python3.4.x
+	The development aspect of this applicatoin assumes your host will be running some flavor of Linux, in conjunction with using your Beaglebone Black for development.
 
-Download either the 'lxde' version or 'console' version of Debian for BeagleBone Black.
-Get the file ending in "img.xz". The 'lxde' version will probably be around 4GB in size, while the 'console' version
-will be about 2Gb.  It may look something like this:
-    
-    bone-debian-7.8-lxde-4gb-armhf-2015-07-28-4gb.img.xz
-
-Insert an SD Card at least as large as 4GB into a card reader.  You will need to use a SD card carrier.
-
-Use gparted to unmount then delete any partitions on the SD card, so that only the single large unformated partition is left.
-
-IMPORTANT: NOTE WHERE THE SD CARD IS IN /dev; e.g., /dev/sdj
-
-Install the Debian image on to the SD Card: (see ==Jessie== below for newer version as of today's date)
--(Assuming it's  bone-debian-7.8-lxde-4gb-armhf-2015-07-28-4gb.img.xz):
-- Assuming the SD Card is 'sdj' in the following example:
-
-    xzcat bone-debian-7.8-lxde-4gb-armhf-2015-07-28-4gb.img.xz | dd of=/dev/<SD_CARD_LOCATION_NOTED_ABOVE>
-
-This will take a while.
-
-Remove from host and install into the BeagleBone
-If this is your first time booting from the micro SD Card, then you will need to hold down the
-Beaglebone Black's boot button (S2 - check a board picture for location) before connecting the 
-Beaglebone to power.  After the 4 blue onboard LEDs have gone from all-lit to flashing, it should
-be OK to release the button.  My experince has been, once I have done this, I no longer have to 
-hold this button down when booting.
+==========GEEKSHOME APPLICATION INSTALLATION (Start)========
+==========FOR ALL INSTALLATIONS - APPLICATION AND DEVELOPMENT==========
 
 Power up the Beaglebone
 Log into the Beaglebone
@@ -49,15 +43,20 @@ Log into the Beaglebone
                      debian@192.168.7.2  (password should be shown; currently is temp
                      
     There may be some key issues; resolve where needed, yes otherwise.
+
+    If you still can't log in, if you have been able to connect the Beaglebone to your network, then try logging into the assigned ip address directly.
+    e.g.: root@<Beaglebone's IP address>.  On my system, that would be root@192.168.1.112
     
-Change the passwords for root and debian!
+On Beaglebone, for security purposes, ensure you have passwords assigned to root and debian!
     if logged in as root, change your password with: 
         passwd
     then change debian's password: 
         passwd debian
+
+This application does not utilize user debian.
         
 Check the system time!  This should be done prior to updating the system software.
-- date
+	date
 If not current today, 
     then install npv.
     add @reboot npv to root's crontab via "crontab -e"
@@ -70,96 +69,82 @@ If date is valid but time is not your timezone then:
 That should do it. If not, assuming you are EST, try:
     cp /usr/share/zoneinfo/America/New_York /etc/timezone
     
-    
-Update software to latest for this release
+Your Beaglebone Black system should at least have come with version Wheezy of Debian, which should 
+suffice for using the application.
+
+Update the Beaglebone's debian software to latest for your release
     apt-get update
     apt-get upgrade
 Mine completed without any errors. Hopefully, yours will too! 
 I usually like to do another apt-get update / upgrade in case anything ticked a requirement.
 
-====Jessie=====
-My system was installed as 'Wheezy'.  However, some of the tools I want to use require 'Jessie'.  So, I upgraded to 'Jesse'.
+On the Beaglebone, from root, create a user geek.
+    adduser geek 
+Enter the password you desire, then complete the questions as desired.
+
+On the Beaglebone, create the following directories for user geek:
+	/home/geek
+		SoftwareProjects	permissions mode: 755
+If you are going to be using this as a developer, then "SETUP FOR DEVELOPMENT" below will have more additional details.
+			
+As user geek on Beaglebone (login as geek or su geek):
+Obtain the geeksHome application from github.com located at https://github.com/bbqbailey/geeksHome
+Consult github.com for instructions.
+
+From the 'bash' directory in the code you pulled down from github, copy the .bash* files into your /home/geek directory.
+
+If you didn't obtain directly while on Beaglebone, but instead used your host, then transfer files from your host computer to the beaglebone directory /home/geek/SoftwareProjects
+either using Linux's scp or a thumbdrive.  Consult Linux for details.
+
+==========GEEKSHOME APPLICATION INSTALLATION (End)========
+
+
+=========SETUP FOR DEVELOPMENT (Start)===========
+
+====INSTALLING DEBIAN BEAGLEBONE BLACK VERSION JESSIE (Start)=====
+
+The Debian Beaglebone Black 'Jessie' version has python3.4 included, but not set as default version.  This application environment requires python version 3.4 or newer for development as it makes use of pyvenv for development.
+
+My system was installed as 'Wheezy'.  However, some of the tools I want to use require 'Jessie'.  So, I upgraded to 'Jesse'.  The following details how I did this.
+- Ensure you understand how to pull an image from Beaglebone.org.  My development has been done using the 'console' 8.1 version of Jessie.
+- Ensure you understand how to use the Linux command 'dd'
+- Ensure you understand how to use the Linux command 'xzcat
+- Ensure you understand how to boot from your micro SD Card.
+- Ensure you have a micro SD Card, a carrier, and a card reader.
+
+Installing Jessie
     - steps for installing the Debian Beaglebone Black 'Jessie' image to your micro SD card:
         - ensure you have a spare 4GB or greater microSD card.
-        - I had the least amount of trouble when I removed any FAT formatting that might have already been on it.
+        - I had the least amount of trouble when I removed any FAT formatting that might have already been on my micro SD Card.
         - Download the Debian Beaglebone Black 'Jessie' version that is the most stable for you from eLinux.org.  In my case, none of those
             images were in the 'stable' condition, even though Debian Jessis has been released for some months now; Beaglebone releases lag the 
             standard Debian release.  So, I had to opt (depending on when you read this, this may not be an issue for you) for the 'testing' version
             of Jessie.  I did not plan on using any XWindows capabilities, so I opted for the -console- version, ending in .img.xz.  This version only
             requires 2GB as opposed to the 4GB for the XWindows version.
         - I downloaded it by clicking on the download for the version I wanted, saving it to my Ubuntu host's Download directory.
-        - I inserted the micro SD card into my host Ubuntu's computer card reader, and noted the /dev/sdX associated for this card.  I will need this information.
+        - I inserted the micro SD card into my host Ubuntu's computer card reader, and noted the /dev/sdX associated for this card.  You will need this information later.
             In my case, it was /dev/sdk, so I'll use that below.  MAKE SURE YOU USE THE CORRECT /dev/sdX as it will overwrite that drive and you will permanently lose
-            anything that may be on that drive!
-        - After it completed, I executed the command 'xzcat' (this decompresses the image) for the downloaded file, and piped that into the 'dd' command:
-            - xzcat <downloadedImage.img.xz> | dd of=/dev/sdk
+            anything that may be on that drive!  I ummounted my SD Card before placing the image onto it.
+	- I used my host's gparted application to unmount then delete any partitions on the SD card, so that only the single large unformated partition is left.
+        - After it completed downloading, I executed the command 'xzcat' (this decompresses the image) for the downloaded file, and piped that into the 'dd' command:
+            xzcat <downloadedImage.img.xz> | dd of=/dev/<your sd?>
         - This took a while for the image to be placed onto my /dev/sdk micro SD Card
-        - Next we'll want to power up the Beaglebone Black with that image on the micro SD Card.
+        - Prepare to power up the Beaglebone Black with that new debian Jessie image on the micro SD Card.
         - Make sure the Beaglebone Black is unplugged from the power feed(s), both the host USB connection as well as any seperate 5VDC power you may be providing.
         - Remove any micro SD Card that may be inserted into your Beaglebone Black and store it somewhere safe.
         - Insert the micro SD Card you just placed the downloaded image onto into the Beaglebone Black's micro SD Card slot.
         - Plug power back into the Beaglebone Black.
         - If this is your first time booting from the micro SD Card, you will need to hold down the 'boot' button (S2) before providing power to the board.  Later, you may not have to hold this button down.  You can release it after all 4 blue lights have illuminated then started blinking.
         - You can log into your Beaglebone Black using ssh.  This is documented effectively on other sites, so consult them if you have issues.
-        
 
+====INSTALLING DEBIAN BEAGLEBONE BLACK VERSION JESSIE (End)=====
 
-If you need to change the time info (e.g., wrong or desiring EDT instead of UTC)
-Run 'dpkg-reconfigure tzdata' if you wish to change it.
-
-
-??? from root, create a user homeMonitor.  You will need to force it as it has a uppercase 'M' in it.
-    adduser homeMonitor --force-badname
-enter the password you desire, then complete the questionair as desired.  I usually add Home Monitor System 
-for the Full name, then just return for everything else.
-
-Pull the geekHome application from github.com
-
-Transfer files from your host computer for user_homeMonitor to the beaglebone /home/homeMonitor
-I use a USB thumb drive to pull the user_homeMonitor from my host, then plug it into the Beaglebone.
-On my Beaglebone, the USB shows up on /media as /media/1862-B2E6.  I don't know where this 1862-B2E6
-comes from!  
-
-The files on my USB are owned by 'debian', with 700 as the security mode.  That means user homeMonitor can't access.
-My USB thumbdrive is FAT (Microsoft file format), so I'm unable to easily change the file permissions, as FAT
-doesn't have the file permissions concept.  Therefore, homeMonitor can't access these files.  So, as root, copy the files
-from /media/<YOUR_USB_DRIVE> to /home/homeMonitor.  These files will be owned by 'root', so we'll need to change the ownership
-as well.
-
-    sudo su   (become root until ^D <Control-D>)
-    cp -a /media/<YOUR_USB_DRIVE>/user_homeMonitor/. /home/homeMonitor/
-    
-    chown -R homeMonitor:homeMonitor *   (change owner and group recursive)
-    chown -R homeMonitor:homeMonitor .*  (change owner and group recursive hidden files):
-    ls -al    (verify all files owned and group are homeMonitor)
-    ^D        (exit root su)
-
-The Debian Beaglebone Black 'Jessie' version has python3.4 included, but not set as default version.
-
-verify python version
-    python
-        shows: Python 2.7.9 (on my system - yours may vary
-    ^D       (to exit python)
-    
-verify python3 version
-    python3
-        shows: Python 3.4.2 (on my system - yours may vary)
-        
-My system shows Python 3.4.2 (default, Oct 8 2014, 14:38:51)
-
-The pyvenv environment will need to utilize Python 3.4 or newer.
-
-There should be an 'alias' in the .bash_aliases for python3, which will
-point you to the python3 installation instead of the python2.7 installation.  It's 
-probably wise to leave the original installation's python link alone, as not all system
-utilities have been upgraded yet to use python3, but homeMonitor application requires python3.
-
-If not, then create an alias in your .bashrc and .bash_profile.  If you don't understand this, then consult the Internet for more detail.
-    alias python=python3.4
-Then verify via 
-    python
-Mine shows Python 3.4.2
-
+====CREATING THE DEVELOPMENT ENVIRONMENT (Start)===============
+As above, create use geek on the Beaglebone Black, and the directory structure.
+Also, create, on your host, user geek.
+Create the following directory structure:
+	/home/geek/
+From the 'bash' directory in the code you pulled down from github, copy the .bash* files into your /home/geek directory.
 
 Adafruit_BBIO currently requires that it be built from source, so you'll need to setup your Beaglebone so it can perform this activity.
     sudo apt-get update
@@ -168,26 +153,25 @@ Adafruit_BBIO currently requires that it be built from source, so you'll need to
     sudo apt-get install build-essential python3-dev python3-setuptools
         
 
-If you are going to be doing development, then it is better to install Python's pyvenv environment in 
-order to avoid clashes with other project packages.  Even if you aren't going to be doing development, 
-I recommend going with Python's pyvenv environment.
+It is better to install Python's pyvenv environment in order to avoid clashes with other project packages.  
 
 Assuming you are going to create a standalone environment (also see Note below for alternative using requirement.txt):
-    cd to location you want to build the environment.  e.g., 
-        cd /home/yourHome/SoftwareProjects
+    cd to the application directory you created earlier.
+        cd /home/geek/SoftwareProjects
     now create the project environment using the 'pyvenv' utility.
-        pyvenv-3.4 ./geeksHome      (Note: in the future, the pyvenv-3.4 may differ, but that's current in Jessie)
-    this will place a new directory geeksHome in /home/yourHome/SoftwareProjects
+        pyvenv-3.4 ./geeksHome-venv      (Note: in the future, the pyvenv-3.4 may differ, but that's current in Jessie)
+    this will place a new directory geeksHome-venv in /home/yourHome/SoftwareProjects
     Now cd to that new directory
-        cd ./geeksHome
+        cd ./geeksHome-venv
     Now activate it to use it ( your will be 'within' the virtual environment), via the bin directory in geeksHome
-        source bin/activate
-            (Later, when you are ready to stop 'being within' the virtual environment), you 'deactivate'
+        source bin/activate     (Later, when you are ready to stop 'being within' the virtual environment), you 'deactivate'
     
 Now we are going to install the Adafruit_BBIO package into the virtual environment geeksHome
-    cd to your geeksHome directory if you moved
+
+    cd to your /home/geek/SoftwareProjects/geeksHome-venv directory if you moved away
     pip3 install adafruit_bbio
-On my system, I got a lot of warning messages regarding 'return' with no value.  This just means the developers on adafruit_bbio have not done all that was necessary to illimante those warnings for Python3, but that doesn't affect our ability to use it.
+
+On my system, I got a lot of warning messages regarding 'return' with no value from the Adafruit_BBIO package.  This just means the developers on adafruit_bbio are trying to keep their code backwards compatible, but that doesn't affect our ability to use it.
     
 Test your installation
     python  (you issued this command)
@@ -212,7 +196,65 @@ When creating the virtual environment, you can either set this up yourself, or m
     then install it using 
         pip3 install -r requirements.txt
         
-BEAGLEBONE LOCAL        
+====CREATING THE DEVELOPMENT ENVIRONMENT (End)===============
+
+====USING THE DEVELOPMENT ENVIRONMENT (Start)================
+The Beaglebone Black is an Armhf architecture. It can not therefore utilize software compiled elsewhere, unless it has been created utilizing a cross-comiler.
+While the Beaglebone is powerful for its size, it still is not as powerful as my host computer.
+
+I like to use an IDE for my code development.  I am retired, and did not want to have to purchase any software, so I looked for a way to to create my software utilizing an IDE on my host computer, while doing the compiles on the Beagle.  In order to do this, I found it useful to mount my host's geeksHome code into the Beaglebone.  That way, I can create the code on my host using the IDE, then save to the source directory, then change to a terminal window (logged into geek@beaglebone.local) and do the compile from that mounted filesystem.  This is quick, easy, and cheap - three things that can't normally be accomplished simultaneously!  This keeps all of my source code on my host, the IDE heavy resources on my host, and the compiles being done on the Beaglebone.  The ability to compile this way is the reason why you performed the pyvenv steps above.
+
+On your Linux host, create the directory structure:
+	/home/geek/SoftwareProjects/geeksHome
+Then cd to it
+	cd /home/geek/SoftwarProjects/geeksHome
+Install git onto this structure
+Pull the latest geeksHome code into your local repository.
+Now you are ready to prepare the Beagle.
+Log into your geek@beaglebone.local user account
+Mount the host source directory into the geek account.  There is a utility script in the geeksHome bash directory called 'sshfs_mount' that you can use, after modifying to accomodate your node names.  
+My sshfs mount command currently looks like this:
+  sshfs  geek@<YOUR_HOST_NAME>.local:./SoftwareProjects/geeksHome /home/geek/SoftwareProjects/geeksHome-venv/geeksHome
+
+	
+There are two (2) shortcuts created for you defined in ~/.bash_aliases.  They are:
+	$working  - where the Python code is located.
+	$virtual  - where the virtual enviroment is located.
+You'll need to 'activate' your virtual environment by using the following command:
+	source $virtual/bin/activate
+Notice your shell prompt changed.
+Later, when you no longer want to use the virtual environment, issue the following command:
+	deactivate
+In the meantime:
+	make Python code changes in your IDE on your host.
+	create a simple file that includes the following elements:
+
+		import adafruit_bbio
+		print("Hello World")
+		print(GPIO)
+
+	save to the $working directory on your host.
+	switch to a terminal logged into as geek on your Beagle
+	ensure you are at $working on the geek account on your Beagle
+	run the Python code using:
+		python (yourfile).py
+
+	It should work.
+
+Note: while on Beaglebone, anywhere within the parent of $working, any simple changes you make, such as vi aFile.py, are being done in the sshfs mounted repository of the host, so these will be in your git repository automatically, and you won't have to copy them from the Beagle to your host!  So, for a small change, I don't always go back to the IDE, I just do them on the Beagle then they are available to my IDE (to refresh of course) and git.
+
+Note: I do all of my development, git clone, add, commit, request-pull, etc while logged in as geek.  I did not see any need to install git onto my Beagle, so I do all git activities from my host.
+
+
+
+====USING THE DEVELOPMENT ENVIRONMENT (End)================
+
+=========SETUP FOR DEVELOPMENT (End)===========
+
+
+===SOME ISSUES I ENCOUNTERED===
+
+BEAGLEBONE.LOCAL        
 If trying to log in via 
     ssh root@beaglebone.local 
 results in an error for you such as
@@ -221,6 +263,7 @@ then you are missing avahi-deamon, in which case:
     sudo apt-get install avahi-daemon
 This took quite a while for my system.
 
+FILE SIZE OF HOST /var/log/syslog INCREASED TO VERY LARGE!
 Note: my host computer (Ubuntu 14.04) began to have a large increase in the size of the system log /var/log/syslog
 In looking at this, I detected a lot of dhcp repeating enteries, about every 10 seconds or so, along with avahi-daemon and networkmanager entries.
 It was associated with (for my system) eth1, which was associated with the USB connection from my host to my Beaglebone Black; I was using this as the primary power connection for the Beagle.  I elected to remove this cable and power the Beagle from a 5VDC power source, and the issue went away.  So, if you are using the USB connection and notice your /var/log/syslog file getting much larger than normal, this may be the culpret.
